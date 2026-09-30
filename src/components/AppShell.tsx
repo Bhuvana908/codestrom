@@ -1,15 +1,14 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
   FlaskConical, Gauge, LayoutDashboard, Link2, ListChecks, Loader2, LogOut,
-  ScrollText, Settings, ShieldAlert, ShieldCheck, ScanLine, BookOpen,
-  Sparkles, Network, Bug, Award, Activity
+  ScrollText, Settings, ShieldAlert, ShieldCheck, ScanLine,
 } from "lucide-react";
 
 import { ApiError, apiGet, apiPost } from "@/lib/api";
 import { endSession } from "@/lib/session";
-import type { ScanRun, Stats, User, VerifyResponse, HealthScoreResponse } from "@/lib/types";
+import type { ScanRun, Stats, User, VerifyResponse } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,7 +18,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const NAV = [
-  // --- Old Original Tabs (Preserved in exact original order) ---
   { to: "/", label: "Dashboard", icon: LayoutDashboard, adminOnly: false },
   { to: "/review", label: "Review Queue", icon: ListChecks, adminOnly: false },
   { to: "/poison-lab", label: "Poison Lab", icon: FlaskConical, adminOnly: false },
@@ -27,35 +25,7 @@ const NAV = [
   { to: "/eval", label: "Evaluation", icon: Gauge, adminOnly: false },
   { to: "/audit", label: "Audit Log", icon: ScrollText, adminOnly: false },
   { to: "/admin", label: "Admin", icon: Settings, adminOnly: true },
-
-  // --- New Feature Tabs (Added after old tabs) ---
-  { to: "/health", label: "Health Score", icon: Activity, adminOnly: false },
-  { to: "/self-healing", label: "Self-Healing RAG", icon: Sparkles, adminOnly: false },
-  { to: "/graph", label: "Knowledge Graph", icon: Network, adminOnly: false },
-  { to: "/red-team", label: "Red-Team Suite", icon: Bug, adminOnly: false },
-  { to: "/reports", label: "PDF Reports", icon: Award, adminOnly: false },
 ];
-
-export function HealthScoreBadge() {
-  const q = useQuery({
-    queryKey: ["health-score"],
-    queryFn: () => apiGet<HealthScoreResponse>("/health-score"),
-    refetchInterval: 20000,
-  });
-  if (!q.data) return null;
-  return (
-    <Link
-      to="/"
-      className="inline-flex items-center gap-1.5 rounded-full border border-indigo-200 bg-indigo-50/80 px-3 py-1 text-xs font-semibold text-indigo-900 transition-colors hover:bg-indigo-100 dark:border-indigo-900 dark:bg-indigo-950/60 dark:text-indigo-200"
-    >
-      <Activity className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
-      <span>Health: {q.data.overall_score}/100</span>
-      <span className="rounded bg-indigo-200/60 px-1 text-[10px] dark:bg-indigo-900">
-        Grade {q.data.grade}
-      </span>
-    </Link>
-  );
-}
 
 // Always-visible header pill: cryptographic hash-chain integrity (green / pulse / red).
 export function LedgerVerifiedBadge() {
@@ -238,7 +208,6 @@ export default function AppShell() {
       <div className="md:pl-64">
         {/* glassmorphic sticky header */}
         <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-slate-200 bg-white/90 px-4 shadow-xs backdrop-blur-md sm:px-6">
-          <HealthScoreBadge />
           <LedgerVerifiedBadge />
           <div className="flex-1" />
           {role !== "viewer" && <RunScanButton disabled={false} />}

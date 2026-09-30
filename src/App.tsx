@@ -17,15 +17,8 @@ import EvaluationPage from "@/pages/EvaluationPage";
 import AuditLog from "@/pages/AuditLog";
 import AdminPage from "@/pages/AdminPage";
 
-// New feature pages (added as new tabs after old tabs)
-import HealthScorePage from "@/pages/HealthScorePage";
-import SelfHealingPage from "@/pages/SelfHealingPage";
-import KnowledgeGraphPage from "@/pages/KnowledgeGraphPage";
-import RedTeamPage from "@/pages/RedTeamPage";
-import ReportsPage from "@/pages/ReportsPage";
-import KnowledgeBasePage from "@/pages/KnowledgeBasePage";
-
-// Auth gate: verifies the session; routes to /setup if needs_setup is true
+// Auth gate: verifies the httpOnly session cookie; routes to /setup on first run
+// (no default credentials exist), /login otherwise.
 function RequireAuth() {
   const me = useQuery({
     queryKey: ["auth", "me"],
@@ -57,7 +50,6 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/setup" element={<Setup />} />
         <Route element={<RequireAuth />}>
-          {/* --- Old Original Tabs & Routes --- */}
           <Route path="/" element={<Dashboard />} />
           <Route path="/review" element={<ReviewQueue />} />
           <Route path="/poison-lab" element={<PoisonLab />} />
@@ -65,14 +57,6 @@ export default function App() {
           <Route path="/eval" element={<EvaluationPage />} />
           <Route path="/audit" element={<AuditLog />} />
           <Route path="/admin" element={<AdminPage />} />
-
-          {/* --- New Feature Tabs (Added after old tabs) --- */}
-          <Route path="/health" element={<HealthScorePage />} />
-          <Route path="/self-healing" element={<SelfHealingPage />} />
-          <Route path="/graph" element={<KnowledgeGraphPage />} />
-          <Route path="/red-team" element={<RedTeamPage />} />
-          <Route path="/reports" element={<ReportsPage />} />
-          <Route path="/documents" element={<KnowledgeBasePage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

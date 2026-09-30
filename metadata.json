@@ -1,6 +1,6 @@
 {
   "name": "Self-Healing Knowledge Base",
-  "description": "Continuous enterprise knowledge integrity with multi-factor health scoring, explainability panels, before/after self-healing RAG, red-team auditing, knowledge graph multi-hop analysis, and tamper-evident cryptographic ledger.",
+  "description": "Enterprise knowledge base governance platform that continuously audits for contradictions, duplicates, and stale claims, quarantines prompt injections, and logs tamper-evident hash-chained audit histories.",
   "permissions": [],
   "capabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

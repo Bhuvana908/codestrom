@@ -15,6 +15,7 @@
     "noEmit": true,
 
     /* Linting */
+    "noUnusedLocals": false,
     "noFallthroughCasesInSwitch": true
   },
   "include": ["vite.config.ts"]

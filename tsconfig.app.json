@@ -25,6 +25,7 @@
     "jsx": "react-jsx",
 
     /* Linting */
+    "noUnusedLocals": false,
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"]
